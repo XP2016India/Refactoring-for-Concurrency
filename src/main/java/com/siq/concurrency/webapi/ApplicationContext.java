@@ -18,6 +18,14 @@ public class ApplicationContext {
     private final Lazy<RegionService> regionService;
     private final Lazy<ObjectMapper> objectMapper;
 
+    /**
+     * <p>
+     * <strong>Notes:</strong>
+     * <p>
+     * When the `this` keyword that escapes a constructor, it is often a code smell and can present its own concurrency
+     * concerns. In this particular case, the ApplicationContext will be fully constructed before it is referenced from
+     * the {@link Lazy} class, which we control.
+     */
     public ApplicationContext() {
         inventoryItemDataStore = new Lazy<>(InventoryItemDataStore::new);
         regionDataStore = new Lazy<>(RegionDataStore::new);
@@ -54,8 +62,11 @@ public class ApplicationContext {
         private static final ApplicationContext INSTANCE;
 
         /**
+         * <p>
+         * <strong>Notes:</strong>
+         * <p>
          * When using the lazy singleton pattern, consider the following situation.... When an error occurs, this class
-         * is not valid and any calls to get the instance will throw a java.lang.NoClassDefFoundError
+         * is not valid and any calls to get the instance will throw a java.lang.NoClassDefFoundError.
          */
         static {
             final ApplicationContext context = new ApplicationContext();
