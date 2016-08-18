@@ -21,8 +21,8 @@ public class ApplicationContext {
     public ApplicationContext() {
         inventoryItemDataStore = new Lazy<>(InventoryItemDataStore::new);
         regionDataStore = new Lazy<>(RegionDataStore::new);
-        inventoryItemService = new Lazy<>(InventoryItemService::new);
-        regionService = new Lazy<>(RegionService::new);
+        inventoryItemService = new Lazy<>(() -> new InventoryItemService(this));
+        regionService = new Lazy<>(() -> new RegionService(this));
         objectMapper = new Lazy<>(ObjectMapper::new);
     }
 
