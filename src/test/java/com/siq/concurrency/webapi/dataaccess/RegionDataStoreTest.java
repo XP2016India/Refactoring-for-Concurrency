@@ -1,4 +1,4 @@
-package com.siq.concurrency.webapi.services;
+package com.siq.concurrency.webapi.dataaccess;
 
 import static java.util.stream.Collectors.toList;
 import static org.hamcrest.CoreMatchers.is;
@@ -10,10 +10,10 @@ import java.util.stream.IntStream;
 import org.junit.Test;
 
 import com.siq.concurrency.webapi.ApplicationContext;
-import com.siq.concurrency.webapi.dataaccess.RegionDataStoreTest;
 import com.siq.concurrency.webapi.entities.Region;
+import com.siq.concurrency.webapi.services.RegionServiceTest;
 
-public class RegionServiceTest {
+public class RegionDataStoreTest {
 
     /**
      * <p>
@@ -22,22 +22,22 @@ public class RegionServiceTest {
      * <ul>
      * <li>This test will fail sporadically.</li>
      * <li>If you remove the `parallel` call for inserts, this test will always succeed.</li>
-     * <li>This is an alternative to {@link RegionDataStoreTest#shouldAddRegionsInParallel()}</li>
+     * <li>This is an alternative to {@link RegionServiceTest#shouldAddRegionsInParallel()}</li>
      * </ul>
      */
     @Test
     public void shouldAddRegionsInParallel() {
         final ApplicationContext applicationContext = new ApplicationContext();
-        final RegionService regionService = applicationContext.getRegionService();
+        final DataStore<Region> regionDataStore = applicationContext.getRegionDataStore();
 
         IntStream.rangeClosed(1, 10) //
                 .parallel() //
-                .forEach(i -> {
-                    regionService.addRegion(new Region(i, "testRegion" + i));
+                .forEach(_i -> {
+                    regionDataStore.insert(new Region(_i, "testRegion" + _i));
                 });
 
         final List<Region> collected = IntStream.rangeClosed(1, 10) //
-                .mapToObj(i -> regionService.getRegion(i)) //
+                .mapToObj(_i -> regionDataStore.findBy(_i)) //
                 .filter(region -> region != null) //
                 .collect(toList());
 
