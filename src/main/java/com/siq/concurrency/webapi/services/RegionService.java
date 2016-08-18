@@ -13,31 +13,40 @@ public class RegionService {
         this(ApplicationContext.getDefault());
     }
 
-    RegionService(final ApplicationContext applicationContext) {
+    public RegionService(final ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }
 
     public void addRegion(final Region region) {
-        applicationContext.getRegionDataStore().insert(region);
+        getRegionDataStore().insert(region);
     }
 
     public Region getRegion(final long id) {
-        return applicationContext.getRegionDataStore().findBy(id);
+        return getRegionDataStore().findBy(id);
     }
 
     public void updateRegion(final Region region) {
-        applicationContext.getRegionDataStore().update(region);
+        getRegionDataStore().update(region);
     }
 
     public void deleteRegion(final long id) {
-        final Region region = applicationContext.getRegionDataStore().findBy(id);
+        final Region region = getRegionDataStore().findBy(id);
         if (region == null) {
             return;
         }
-        final DataStore<InventoryItem> inventoryItemDataStore = applicationContext.getInventoryItemDataStore();
+        final DataStore<InventoryItem> inventoryItemDataStore = getInventoryItemDataStore();
         region.getInventoryItems().stream() //
                 .map(InventoryItem::getId) //
                 .forEach(inventoryItemDataStore::delete);
-        applicationContext.getRegionDataStore().delete(id);
+        getRegionDataStore().delete(id);
     }
+
+    private DataStore<InventoryItem> getInventoryItemDataStore() {
+        return applicationContext.getInventoryItemDataStore();
+    }
+
+    private DataStore<Region> getRegionDataStore() {
+        return applicationContext.getRegionDataStore();
+    }
+
 }

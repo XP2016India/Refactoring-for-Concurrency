@@ -2,6 +2,7 @@ package com.siq.concurrency.webapi.dataaccess;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Objects;
 
 import com.siq.concurrency.utils.SequenceGenerator;
 import com.siq.concurrency.webapi.entities.Entity;
@@ -28,7 +29,7 @@ abstract class SimpleDataStore<E extends Entity> implements DataStore<E> {
         if (existingE == null) {
             throw new IllegalArgumentException("Entry not found");
         }
-        if (!e.getUpdatedAt().equals(existingE.getUpdatedAt())) {
+        if (!Objects.equals(e.getUpdatedAt(), existingE.getUpdatedAt())) {
             throw new IllegalArgumentException("Stale data");
         }
         e.setUpdatedAt(new Date());

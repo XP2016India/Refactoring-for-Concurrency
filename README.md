@@ -1,6 +1,6 @@
 # Refactoring-for-Concurrency
 
-After initially importing this file, please make sure to run gradle test to bring down any dependencies.
+After initially importing this file, please make sure to run `gradle test` to bring down any dependencies.
 
 
 ## DESCRIPTION:
@@ -24,7 +24,7 @@ These are the scenarios to explore:
 ## SOFTWARE NEEDED FOR THIS WORKSHOP:
 Participants are encouraged to have the following installed as a pre-requisite:
 
-A git client (to get the source)
-Java 8
-A Java editor / IDE (Eclipse, IntelliJ, Netbeans,
-Gradle.
+* A git client (to get the source)
+* Java 8
+* A Java editor / IDE (Eclipse, IntelliJ, Netbeans, vi, etc.)
+* Gradle

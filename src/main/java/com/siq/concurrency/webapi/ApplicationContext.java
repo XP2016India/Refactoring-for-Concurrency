@@ -41,14 +41,14 @@ public class ApplicationContext {
 
     public InventoryItemService getInventoryItemService() {
         if (inventoryItemService == null) {
-            inventoryItemService = new InventoryItemService();
+            inventoryItemService = new InventoryItemService(this);
         }
         return inventoryItemService;
     }
 
     public RegionService getRegionService() {
         if (regionService == null) {
-            regionService = new RegionService();
+            regionService = new RegionService(this);
         }
         return regionService;
     }
