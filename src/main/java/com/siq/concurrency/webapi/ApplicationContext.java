@@ -1,6 +1,7 @@
 package com.siq.concurrency.webapi;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.siq.concurrency.utils.Lazy;
 import com.siq.concurrency.webapi.dataaccess.DataStore;
 import com.siq.concurrency.webapi.dataaccess.InventoryItemDataStore;
 import com.siq.concurrency.webapi.dataaccess.RegionDataStore;
@@ -11,53 +12,58 @@ import com.siq.concurrency.webapi.services.RegionService;
 
 public class ApplicationContext {
 
-    private static ApplicationContext INSTANCE;
-    private DataStore<InventoryItem> inventoryItemDataStore;
-    private DataStore<Region> regionDataStore;
-    private InventoryItemService inventoryItemService;
-    private RegionService regionService;
-    private ObjectMapper objectMapper;
+    private final Lazy<DataStore<InventoryItem>> inventoryItemDataStore;
+    private final Lazy<DataStore<Region>> regionDataStore;
+    private final Lazy<InventoryItemService> inventoryItemService;
+    private final Lazy<RegionService> regionService;
+    private final Lazy<ObjectMapper> objectMapper;
+
+    public ApplicationContext() {
+        inventoryItemDataStore = new Lazy<>(InventoryItemDataStore::new);
+        regionDataStore = new Lazy<>(RegionDataStore::new);
+        inventoryItemService = new Lazy<>(InventoryItemService::new);
+        regionService = new Lazy<>(RegionService::new);
+        objectMapper = new Lazy<>(ObjectMapper::new);
+    }
 
     public static ApplicationContext getDefault() {
-        if (INSTANCE == null) {
-            INSTANCE = new ApplicationContext();
-        }
-        return INSTANCE;
+        return DefaultHolder.INSTANCE;
     }
 
     public DataStore<InventoryItem> getInventoryItemDataStore() {
-        if (inventoryItemDataStore == null) {
-            inventoryItemDataStore = new InventoryItemDataStore();
-        }
-        return inventoryItemDataStore;
+        return inventoryItemDataStore.get();
     }
 
     public DataStore<Region> getRegionDataStore() {
-        if (regionDataStore == null) {
-            regionDataStore = new RegionDataStore();
-        }
-        return regionDataStore;
+        return regionDataStore.get();
     }
 
     public InventoryItemService getInventoryItemService() {
-        if (inventoryItemService == null) {
-            inventoryItemService = new InventoryItemService(this);
-        }
-        return inventoryItemService;
+        return inventoryItemService.get();
     }
 
     public RegionService getRegionService() {
-        if (regionService == null) {
-            regionService = new RegionService(this);
-        }
-        return regionService;
+        return regionService.get();
     }
 
     public ObjectMapper getObjectMapper() {
-        if (objectMapper == null) {
-            final ObjectMapper o = new ObjectMapper();
-            objectMapper = o;
+        return objectMapper.get();
+    }
+
+    private static final class DefaultHolder {
+        private static final ApplicationContext INSTANCE;
+
+        /**
+         * When using the lazy singleton pattern, consider the following situation.... When an error occurs, this class
+         * is not valid and any calls to get the instance will throw a java.lang.NoClassDefFoundError
+         */
+        static {
+            final ApplicationContext context = new ApplicationContext();
+            // do some initialization that causes an exception
+            // if (new Date().getTime() % 2 == 0) {
+            // throw new IllegalStateException();
+            // }
+            INSTANCE = context;
         }
-        return objectMapper;
     }
 }
