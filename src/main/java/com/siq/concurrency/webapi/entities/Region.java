@@ -3,8 +3,7 @@ package com.siq.concurrency.webapi.entities;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -16,7 +15,7 @@ public class Region implements Entity {
     private Date updatedAt;
 
     private String name;
-    private final Set<InventoryItem> inventoryItems = new HashSet<>();
+    private final ConcurrentSkipListSet<InventoryItem> inventoryItems = new ConcurrentSkipListSet<>();
 
     public Region() {
     }

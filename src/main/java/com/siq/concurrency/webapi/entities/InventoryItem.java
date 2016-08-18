@@ -1,11 +1,19 @@
 package com.siq.concurrency.webapi.entities;
 
 import java.util.Date;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-public class InventoryItem implements Entity {
+/**
+ * <p>
+ * <strong>Notes:</strong>
+ * <p>
+ * Because the {@link ConcurrentSkipListSet} requires its contents to implement {@link Comparable}, we must implement
+ * this interface as well.
+ */
+public class InventoryItem implements Entity, Comparable<InventoryItem> {
     private long id;
     private Date createdAt;
     private Date updatedAt;
@@ -86,5 +94,10 @@ public class InventoryItem implements Entity {
     @Override
     public int hashCode() {
         return HashCodeBuilder.reflectionHashCode(this);
+    }
+
+    @Override
+    public int compareTo(final InventoryItem other) {
+        return Long.valueOf(getId()).compareTo(other.getId());
     }
 }
