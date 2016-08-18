@@ -10,21 +10,10 @@ import java.util.stream.IntStream;
 import org.junit.Test;
 
 import com.siq.concurrency.webapi.ApplicationContext;
-import com.siq.concurrency.webapi.dataaccess.RegionDataStoreTest;
 import com.siq.concurrency.webapi.entities.Region;
 
 public class RegionServiceTest {
 
-    /**
-     * <p>
-     * <strong>Notes:</strong>
-     * <p>
-     * <ul>
-     * <li>This test will fail sporadically.</li>
-     * <li>If you remove the `parallel` call for inserts, this test will always succeed.</li>
-     * <li>This is an alternative to {@link RegionDataStoreTest#shouldAddRegionsInParallel()}</li>
-     * </ul>
-     */
     @Test
     public void shouldAddRegionsInParallel() {
         final ApplicationContext applicationContext = new ApplicationContext();

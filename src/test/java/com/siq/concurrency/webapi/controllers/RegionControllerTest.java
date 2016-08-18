@@ -99,17 +99,6 @@ public class RegionControllerTest {
         assertThat(inventoryItemService.getInventoryItem(2), is(nullValue()));
     }
 
-    /**
-     * <p>
-     * <strong>Notes:</strong>
-     * <p>
-     * <ul>
-     * <li>This test will fail sporadically.</li>
-     * <li>If you remove the `parallel` call for looking up regions, this test will always succeed.</li>
-     * <li>The purpose of the Thread.sleep call is to ensure that the items have sufficiently different time
-     * stamps.</li>
-     * </ul>
-     */
     @Test
     public void shouldReturnConsistentDateStamps() {
         final int numberOfRegions = 4;

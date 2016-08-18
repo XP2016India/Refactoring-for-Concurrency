@@ -25,17 +25,6 @@ public class InventoryItemServiceTest {
         inventoryItemService = applicationContext.getInventoryItemService();
     }
 
-    /**
-     * <p>
-     * <strong>Notes:</strong>
-     * <p>
-     * <ul>
-     * <li>This test will fail sporadically.</li>
-     * <li>If you remove the `parallel` call for inserts, this test will always succeed.</li>
-     * <li>By now, we already know that not all InventoryItems will be added to the data store because of a different
-     * bug. What other implications are there in this case?</li>
-     * </ul>
-     */
     @Test
     public void shouldAddInventoryItemsToARegionInParallel() {
         regionService.addRegion(new Region(1, "testRegion"));
@@ -51,15 +40,6 @@ public class InventoryItemServiceTest {
         assertThat(region.getInventoryItems().size(), is(10));
     }
 
-    /**
-     * <p>
-     * <strong>Notes:</strong>
-     * <p>
-     * <ul>
-     * <li>This test will fail sporadically with a ConcurrentModificationException.</li>
-     * <li>If you remove the `parallel` call for inserts/reads, this test will always succeed.</li>
-     * </ul>
-     */
     @Test
     public void shouldBeAbleToAddInventoryItemsAndRetrieveThemInParallel() {
         final Region region = new Region(1, "testRegion");

@@ -11,20 +11,9 @@ import org.junit.Test;
 
 import com.siq.concurrency.webapi.ApplicationContext;
 import com.siq.concurrency.webapi.entities.Region;
-import com.siq.concurrency.webapi.services.RegionServiceTest;
 
 public class RegionDataStoreTest {
 
-    /**
-     * <p>
-     * <strong>Notes:</strong>
-     * <p>
-     * <ul>
-     * <li>This test will fail sporadically.</li>
-     * <li>If you remove the `parallel` call for inserts, this test will always succeed.</li>
-     * <li>This is an alternative to {@link RegionServiceTest#shouldAddRegionsInParallel()}</li>
-     * </ul>
-     */
     @Test
     public void shouldAddRegionsInParallel() {
         final ApplicationContext applicationContext = new ApplicationContext();
