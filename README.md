@@ -4,7 +4,7 @@ After initially importing this file, please make sure to run `gradle test` to br
 
 
 ## DESCRIPTION:
-A walk through various scenarios in a codebase that works perfectly when there are only a few users in the system, but where subtle, irreproducible or hard-to-reproduce bugs appear under load. S let’s explore what makes this code concurrency-unsafe and what options we have for changing the implementation of the code without changing its expected behavior.
+A walk through various scenarios in a codebase that works perfectly when there are only a few users in the system, but where subtle, irreproducible or hard-to-reproduce bugs appear under load. Let’s explore what makes this code concurrency-unsafe and what options we have for changing the implementation of the code without changing its expected behavior.
 
 These are the scenarios to explore:
 
@@ -28,3 +28,11 @@ Participants are encouraged to have the following installed as a pre-requisite:
 * Java 8
 * A Java editor / IDE (Eclipse, IntelliJ, Netbeans, vi, etc.)
 * Gradle
+
+## The Backstory
+Suppose we have just started a client engagement and come into an existing, well-tested codebase (or so it seems!).
+Suppose this codebase has been deployed in production for a few alpha-testers who are all delighted with how well it currently works.
+Suppose that, based on positive initial feedback, more and more users have been invited to the beta-test.
+Suppose that our first sprint's worth of work has been filled not with new feature requests but with bug reports that are difficult to reproduce.
+
+
